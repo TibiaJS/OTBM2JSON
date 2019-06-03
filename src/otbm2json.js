@@ -1,5 +1,5 @@
 const fs = require("fs");
-const HEADERS = require("./lib/headers");
+const HEADERS = require("./headers");
 
 const NODE_ESC = 0xFD;
 const NODE_INIT = 0xFE;
@@ -16,7 +16,7 @@ function writeOTBM(__OUTFILE__, data) {
 
   // Write all nodes
   fs.writeFileSync(__OUTFILE__, serializeOTBM(data));
-  
+
 }
 
 function serializeOTBM(data) {
@@ -88,7 +88,7 @@ function serializeOTBM(data) {
     // Write each node type
     switch(node.type) {
       case HEADERS.OTBM_MAP_HEADER:
-        buffer = Buffer.alloc(17); 
+        buffer = Buffer.alloc(17);
         buffer.writeUInt8(HEADERS.OTBM_MAP_HEADER, 0);
         buffer.writeUInt32LE(node.version, 1);
         buffer.writeUInt16LE(node.mapWidth, 5);
@@ -97,19 +97,19 @@ function serializeOTBM(data) {
         buffer.writeUInt32LE(node.itemsMinorVersion, 13);
         break;
       case HEADERS.OTBM_MAP_DATA:
-        buffer = Buffer.alloc(1); 
+        buffer = Buffer.alloc(1);
         buffer.writeUInt8(HEADERS.OTBM_MAP_DATA, 0);
         buffer = Buffer.concat([buffer, writeAttributes(node)]);
         break;
       case HEADERS.OTBM_TILE_AREA:
-        buffer = Buffer.alloc(6); 
+        buffer = Buffer.alloc(6);
         buffer.writeUInt8(HEADERS.OTBM_TILE_AREA, 0);
         buffer.writeUInt16LE(node.x, 1);
         buffer.writeUInt16LE(node.y, 3);
         buffer.writeUInt8(node.z, 5);
         break;
       case HEADERS.OTBM_TILE:
-        buffer = Buffer.alloc(3); 
+        buffer = Buffer.alloc(3);
         buffer.writeUInt8(HEADERS.OTBM_TILE, 0);
         buffer.writeUInt8(node.x, 1);
         buffer.writeUInt8(node.y, 2);
@@ -124,7 +124,7 @@ function serializeOTBM(data) {
         buffer = Buffer.concat([buffer, writeAttributes(node)]);
         break;
       case HEADERS.OTBM_ITEM:
-        buffer = Buffer.alloc(3); 
+        buffer = Buffer.alloc(3);
         buffer.writeUInt8(HEADERS.OTBM_ITEM, 0);
         buffer.writeUInt16LE(node.id, 1);
         buffer = Buffer.concat([buffer, writeAttributes(node)]);
@@ -139,7 +139,7 @@ function serializeOTBM(data) {
         buffer.writeUInt8(node.z, 3 + node.name.length + 4);
         break;
       case HEADERS.OTBM_WAYPOINTS:
-        buffer = Buffer.alloc(1); 
+        buffer = Buffer.alloc(1);
         buffer.writeUInt8(HEADERS.OTBM_WAYPOINTS, 0);
         break;
       case HEADERS.OTBM_TOWNS:
@@ -157,7 +157,7 @@ function serializeOTBM(data) {
         buffer.writeUInt8(node.z, 7 + node.name.length + 4);
         break;
       default:
-        throw("Could not write node. Unknown node type: " + node.type); 
+        throw("Could not write node. Unknown node type: " + node.type);
     }
 
     return escapeCharacters(buffer);
@@ -200,7 +200,7 @@ function serializeOTBM(data) {
      */
 
     var buffer;
-    var attributeBuffer = Buffer.alloc(0); 
+    var attributeBuffer = Buffer.alloc(0);
 
     if(node.destination) {
       buffer = Buffer.alloc(6);
@@ -308,21 +308,21 @@ function serializeOTBM(data) {
   }
 
   function writeFlags(zones) {
-  
+
     /* FUNCTION writeFlags
      * Writes OTBM tile bit-flags to integer
      */
-  
+
     var flags = HEADERS.TILESTATE_NONE;
-  
+
     flags |= zones.protection && HEADERS.TILESTATE_PROTECTIONZONE;
     flags |= zones.noPVP && HEADERS.TILESTATE_NOPVP;
     flags |= zones.noLogout && HEADERS.TILESTATE_NOLOGOUT;
     flags |= zones.PVPZone && HEADERS.TILESTATE_PVPZONE;
     flags |= zones.refresh && HEADERS.TILESTATE_REFRESH;
-  
+
     return flags;
-  
+
   }
 
   // OTBM Header

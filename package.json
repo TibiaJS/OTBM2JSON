@@ -1,0 +1,24 @@
+{
+  "name": "otbm2json",
+  "version": "1.0.0",
+  "description": "NodeJS library for programmatically modifying Open Tibia Binary Mapping files. This framework reads .otbm files and parses them to an intermediary JSON format. This JSON structure can be changed programatically to make generic modifications. Once a change has been committed to the structure, it can be encoded back to an .otbm file.",
+  "main": "src/otbm2json.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TibiaJS/OTBM2JSON.git"
+  },
+  "author": "Inconcessus",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/TibiaJS/OTBM2JSON/issues"
+  },
+  "homepage": "https://github.com/TibiaJS/OTBM2JSON#readme",
+  "dependencies": {},
+  "devDependencies": {}
+}
